@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+
+body {
+    background-image: url('img/nen1.jpg'); /* Đường dẫn đến tập tin hình ảnh */
+    background-size: cover; /* Kích thước ảnh sẽ được điều chỉnh để phủ đầy kích thước của body */
+    background-position: center; /* Đặt vị trí xuất phát của hình ảnh là giữa body */
+    background-repeat: no-repeat; /* Không lặp lại hình ảnh nếu kích thước của body lớn hơn kích thước ảnh */
+    body {
+    color: #fff; /* Màu chữ trắng */
+}
+
+}
+
+.login {
+  background-image: url("img/hinhlogin.jpg");
+  max-width: 430px;
+  margin: auto; /* Sử dụng margin:auto để căn giữa form theo cả hai chiều ngang và dọc */
+  padding: 50px;
+  margin-top: 170px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Tính cả padding và border vào kích thước của form */
+}
+
+.login h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login label {
+  display: block;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+.login input[type="text"],
+.login input[type="password"] {
+  width: 100%; /* Sử dụng width:100% để input chiếm đầy đủ chiều rộng của form */
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.login button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login button:hover {
+  background-color: #0056b3;
+}
+.btn_su{
+  color: #fff;
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="login">
+      <form id="loginForm">
+        <h1>LOGIN</h1>
+        <label>UserName</label>
+        <input type="text" id="username" />
+        <label>PassWord</label>
+        <input type="password" id="password" />
+        <button>submit</button>
+        <a href="signup.html" class="btn_su">SignUp</a>
+      </form>
+    </div>
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent default form submission
+
+          // Get form inputs
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          // Validate inputs
+          if (!username.trim() || !password.trim()) {
+            alert("Please enter username and password");
+            return;
+          }
+
+          // Check if user exists in local storage
+          const users = JSON.parse(localStorage.getItem("users")) || [];
+          const user = users.find(
+            (user) => user.username === username && user.password === password
+          );
+          if (!user) {
+            alert("Invalid username or password");
+            return;
+          }
+
+          // Store logged-in user in session storage
+          sessionStorage.setItem("loggedInUser", JSON.stringify(user));
+
+          // Redirect to home page or any other page after successful login
+          window.location.href = "home.html";
+        });
+    </script>
+  </body>
+</html>

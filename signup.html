@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <style>
+      .signup {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .signup h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .signup label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .signup input[type="text"],
+  .signup input[type="email"],
+  .signup input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .signup button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #b92626;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signup button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+    </style>
+  </head>
+  <body>
+    <div class="signup">
+      <form id="signupForm">
+        <h1>Sign Up</h1>
+        <label>Username</label>
+        <input type="text" id="username" />
+        <label>Email</label>
+        <input type="email" id="email" />
+        <label>Password</label>
+        <input type="password" id="password" />
+        <label>Confirm Password</label>
+        <input type="password" id="confirmPassword" />
+        <button type="submit">Sign Up</button>
+        <a href="index.html">login</a>
+      </form>
+    </div>
+    <script>
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent default form submission
+
+          // Get form inputs
+          const username = document.getElementById("username").value;
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+          // Validate inputs
+          if (
+            !username.trim() ||
+            !email.trim() ||
+            !password.trim() ||
+            !confirmPassword.trim()
+          ) {
+            alert("All fields are required");
+            return;
+          }
+
+          if (password !== confirmPassword) {
+            alert("Passwords do not match");
+            return;
+          }
+
+          // Check if user with the same email already exists
+          const users = JSON.parse(localStorage.getItem("users")) || [];
+          const existingUser = users.find((user) => user.email === email);
+          if (existingUser) {
+            alert("User with this email already exists");
+            return;
+          }
+
+          // Create user object
+          const newUser = {
+            username: username,
+            email: email,
+            password: password,
+          };
+
+          // Save user to local storage
+          users.push(newUser);
+          localStorage.setItem("users", JSON.stringify(users));
+
+          // Redirect to login page
+          window.location.href = "login.html";
+        });
+    </script>
+  </body>
+</html>
